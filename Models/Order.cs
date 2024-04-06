@@ -16,7 +16,7 @@ namespace HHPW.Models
         public DateTime? CloseTime { get; set; }
         public int RevTotal { get; set; }
         public int Tip {  get; set; }
-        public string PaymentType { get; set; }
+        public string? PaymentType { get; set; }
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
 
     }

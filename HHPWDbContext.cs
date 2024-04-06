@@ -49,9 +49,7 @@ public class HHPWDbContext : DbContext
             IsPhone = true, 
             UserId = 1, 
             OrderTime = new DateTime(2024, 4, 1, 10, 0, 0),
-            RevTotal = 100, 
-            Tip = 50, 
-            PaymentType = "Credit" },
+            RevTotal = 100},
         new Order {
             OrderId = 2,
             IsOpen = true,
@@ -61,9 +59,7 @@ public class HHPWDbContext : DbContext
             IsPhone = false,
             UserId = 2,
             OrderTime = new DateTime(2024, 4, 3, 12, 0, 0),
-            RevTotal = 40,
-            Tip = 20,
-            PaymentType = "Cash" },
+            RevTotal = 40},
         new Order {
             OrderId = 3,
             IsOpen = false,
@@ -76,7 +72,7 @@ public class HHPWDbContext : DbContext
             CloseTime = new DateTime(2024, 4, 3, 6, 0, 0),
             RevTotal = 70,
             Tip = 30,
-            PaymentType = "Debit" },
+            PaymentType = "Debit"},
         });
 
         modelBuilder.Entity<OrderItem>().HasData(new OrderItem[]
