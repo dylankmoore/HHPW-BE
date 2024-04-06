@@ -1,6 +1,6 @@
-@HHPW_BE_HostAddress = http://localhost:5193
+@HHPWHostAddress = http://localhost:5193
 
-GET {{HHPW_BE_HostAddress}}/weatherforecast/
+GET {{HHPWHostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
