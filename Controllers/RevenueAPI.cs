@@ -13,8 +13,7 @@ namespace HHPW_BE.Controllers
             {
                 //calculate total rev from all orders
                 var totalRevenue = db.Orders
-                    .Where(o => !o.IsOpen) // only select closed orders
-                    .Sum(o => o.RevTotal + o.Tip); // total of rev & tips
+                    .Sum(o => o.RevTotal + o.Tip); // total of all rev & tips
 
                 return Results.Ok(new { TotalRevenue = totalRevenue });
             });
