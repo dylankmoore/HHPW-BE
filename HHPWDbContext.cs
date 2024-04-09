@@ -33,8 +33,8 @@ public class HHPWDbContext : DbContext
         // Seeding Users
         modelBuilder.Entity<User>().HasData(new User[]
         {
-        new User { UserId = 1, FirebaseKey = "BcS4IidUlKN6C5itScUEufIaQAG3", Name = "Lilith Sternin"},
-        new User { UserId = 2, FirebaseKey = "firebaseKey2", Name = "Niles Crane"},
+        new User { UserId = 1, Uid = "BcS4IidUlKN6C5itScUEufIaQAG3", Name = "Lilith Sternin"},
+        new User { UserId = 2, Uid = "firebaseKey2", Name = "Niles Crane"},
         });
 
         // Seeding Orders
@@ -78,8 +78,10 @@ public class HHPWDbContext : DbContext
         modelBuilder.Entity<OrderItem>().HasData(new OrderItem[]
         {
         new OrderItem { OrderItemId = 1, OrderId = 1, ItemId = 1},
-        new OrderItem { OrderItemId = 2, OrderId = 1, ItemId = 1},
-        new OrderItem { OrderItemId = 3, OrderId = 2, ItemId = 3}
+        new OrderItem { OrderItemId = 2, OrderId = 1, ItemId = 5},
+        new OrderItem { OrderItemId = 3, OrderId = 2, ItemId = 3},
+        new OrderItem { OrderItemId = 4, OrderId = 3, ItemId = 4},
+        new OrderItem { OrderItemId = 5, OrderId = 3, ItemId = 7}
 });
     }
 }

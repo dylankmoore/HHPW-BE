@@ -1,4 +1,5 @@
 using HHPW.Models;
+using HHPW_BE.Controllers;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
@@ -32,5 +33,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+UserAPI.Map(app);
+OrderAPI.Map(app);
+RevenueAPI.Map(app);
 
 app.Run();
