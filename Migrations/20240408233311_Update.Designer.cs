@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HHPW_BE.Migrations
 {
     [DbContext(typeof(HHPWDbContext))]
-    partial class HHPWDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240408233311_Update")]
+    partial class Update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,7 +217,7 @@ namespace HHPW_BE.Migrations
                         new
                         {
                             OrderItemId = 2,
-                            ItemId = 5,
+                            ItemId = 1,
                             OrderId = 1
                         },
                         new
@@ -223,18 +225,6 @@ namespace HHPW_BE.Migrations
                             OrderItemId = 3,
                             ItemId = 3,
                             OrderId = 2
-                        },
-                        new
-                        {
-                            OrderItemId = 4,
-                            ItemId = 4,
-                            OrderId = 3
-                        },
-                        new
-                        {
-                            OrderItemId = 5,
-                            ItemId = 7,
-                            OrderId = 3
                         });
                 });
 
