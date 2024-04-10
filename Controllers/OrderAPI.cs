@@ -26,11 +26,11 @@ namespace HHPW_BE.Controllers
                     .Select(o => new
                     {
                         o.OrderId,
-                        OrderStatus = o.IsOpen ? "open" : "closed",
+                        IsOpen = o.IsOpen,
                         o.CustomerName,
                         o.CustomerPhone,
                         o.Email,
-                        OrderType = o.IsPhone ? "phone" : "in-person",
+                        IsPhone = o.IsPhone,
                         o.UserId,
                         o.OrderTime,
                         o.CloseTime,

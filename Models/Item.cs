@@ -9,6 +9,5 @@ namespace HHPW.Models
         public int Price { get; set; }
         public List<OrderItem> Order { get; set; } = new List<OrderItem>();
 
-
     }
 }
