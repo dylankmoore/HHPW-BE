@@ -93,7 +93,7 @@ namespace HHPW_BE.Controllers
             });
 
             //CREATE an order
-            app.MapPost("/orders", (HHPWDbContext db, CreateOrderDTO orderDTO) =>
+            app.MapPost("/orders/new", (HHPWDbContext db, CreateOrderDTO orderDTO) =>
             {
                 var newOrder = new Order
                 {
@@ -110,6 +110,8 @@ namespace HHPW_BE.Controllers
 
                 db.Orders.Add(newOrder);
                 db.SaveChanges();
+
+                var orderId = newOrder.OrderId;
 
                 return Results.Created($"/orders/{newOrder.OrderId}", newOrder);
             });
