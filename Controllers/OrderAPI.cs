@@ -12,8 +12,29 @@ namespace HHPW_BE.Controllers
             app.MapGet("/orders", (HHPWDbContext db) =>
             {
                 var orders = db.Orders
-                               .Include(o => o.Items)
-                               .ToList();
+                .Select(order => new
+                {
+                    order.OrderId,
+                    order.IsOpen,
+                    order.CustomerName,
+                    order.CustomerPhone,
+                    order.Email,
+                    order.IsPhone,
+                    order.UserId,
+                    order.OrderTime,
+                    order.CloseTime,
+                    order.RevTotal,
+                    order.Tip,
+                    order.PaymentType,
+                    Items = order.Items.Select(item => new
+                    {
+                        item.OrderItemId,
+                        item.ItemId,
+                        ItemName = item.Item.Name,
+                        ItemPrice = item.Item.Price
+                    })
+                })
+                .ToList();
 
                 return Results.Ok(orders);
             });
@@ -39,6 +60,8 @@ namespace HHPW_BE.Controllers
                         o.PaymentType,
                         Items = o.Items.Select(oi => new
                         {
+                            oi.OrderItemId,
+                            oi.ItemId,
                             ItemName = oi.Item.Name,
                             oi.Item.Price
                         }).ToList()
@@ -74,11 +97,11 @@ namespace HHPW_BE.Controllers
             });
 
             //DELETE an item from order
-            app.MapDelete("/orders/{orderId}/items/{itemId}", (HHPWDbContext db, int orderId, int itemId) =>
+            app.MapDelete("/orders/{orderId}/items/{orderItemId}", (HHPWDbContext db, int orderId, int orderItemId) =>
             {
                 var orderItem = db.OrderItems
-                                  .Include(oi => oi.Item)
-                                  .FirstOrDefault(oi => oi.OrderId == orderId && oi.ItemId == itemId);
+                      .Include(oi => oi.Item)
+                      .FirstOrDefault(oi => oi.OrderId == orderId && oi.OrderItemId == orderItemId);
 
                 if (orderItem == null)
                 {
@@ -89,7 +112,7 @@ namespace HHPW_BE.Controllers
 
                 db.SaveChanges();
 
-                return Results.Ok($"{itemName} has been removed from order {orderId}.");
+                return Results.Ok($"{orderItem.Item.Name} has been removed from order {orderId}.");
             });
 
             //CREATE an order
@@ -196,6 +219,12 @@ namespace HHPW_BE.Controllers
                 db.SaveChanges();
 
                 return Results.Ok($"Order with ID {orderId} closed successfully!");
+            });
+
+            //GET all items
+            app.MapGet("/items", async (HHPWDbContext db) => {
+                var items = await db.Items.ToListAsync();
+                return Results.Ok(items);
             });
 
         }
