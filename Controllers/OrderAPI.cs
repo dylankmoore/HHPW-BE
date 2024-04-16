@@ -195,7 +195,9 @@ namespace HHPW_BE.Controllers
             //CLOSE order & GET revenue
             app.MapPost("/orders/{orderId}/close", (HHPWDbContext db, int orderId, CreateRevenueDTO createRevenueDTO) =>
             {
-                var order = db.Orders.FirstOrDefault(o => o.OrderId == orderId);
+                var order = db.Orders
+                .Include(o => o.Items)
+                .FirstOrDefault(o => o.OrderId == orderId);
 
                 if (order == null)
                 {
@@ -213,8 +215,10 @@ namespace HHPW_BE.Controllers
                 order.PaymentType = createRevenueDTO.PaymentType;
                 order.Tip = createRevenueDTO.TipAmount;
 
+                decimal totalRevenue = order.Items.Sum(item => db.Items.FirstOrDefault(i => i.ItemId == item.ItemId)?.Price ?? 0) + order.Tip;
+
                 // update revenue total w tip
-                order.RevTotal += createRevenueDTO.TipAmount;
+                order.RevTotal = totalRevenue;
 
                 db.SaveChanges();
 
