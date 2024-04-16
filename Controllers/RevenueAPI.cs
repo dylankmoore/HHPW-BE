@@ -19,6 +19,34 @@ namespace HHPW_BE.Controllers
                 return Results.Ok(new { TotalRevenue = totalRevenue });
             });
 
+            //GET revenue details
+            app.MapGet("/revenue", async (HHPWDbContext db) =>
+            {
+                var totalSales = await db.Orders.SumAsync(o => o.RevTotal);
+                var totalTips = await db.Orders.SumAsync(o => o.Tip);
+                var phoneOrdersCount = await db.Orders.CountAsync(o => o.IsPhone);
+                var inPersonOrdersCount = await db.Orders.CountAsync(o => !o.IsPhone);
+                var cashPaymentsCount = await db.Orders.CountAsync(o => o.PaymentType == "Cash");
+                var mobilePaymentsCount = await db.Orders.CountAsync(o => o.PaymentType == "Mobile");
+                var debitPaymentsCount = await db.Orders.CountAsync(o => o.PaymentType == "Debit");
+                var creditPaymentsCount = await db.Orders.CountAsync(o => o.PaymentType == "Credit");
+
+                var revenueDetails = new
+                {
+                    TotalSales = totalSales,
+                    TotalTips = totalTips,
+                    PhoneOrdersCount = phoneOrdersCount,
+                    InPersonOrdersCount = inPersonOrdersCount,
+                    CashPaymentsCount = cashPaymentsCount,
+                    MobilePaymentsCount = mobilePaymentsCount,
+                    DebitPaymentsCount = debitPaymentsCount,
+                    CreditPaymentsCount = creditPaymentsCount
+                };
+
+                return Results.Ok(revenueDetails);
+            });
+
         }
+
     }
 }
