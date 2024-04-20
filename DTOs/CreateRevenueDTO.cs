@@ -5,7 +5,7 @@
         public decimal TotalAmount { get; set; }
         public DateTime ClosureDate { get; set; }
         public string PaymentType { get; set; }
-        public int TipAmount { get; set; }
+        public decimal TipAmount { get; set; }
         public bool isPhone { get; set; }
     }
 }

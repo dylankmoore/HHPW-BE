@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HHPW_BE.Migrations
 {
     [DbContext(typeof(HHPWDbContext))]
-    partial class HHPWDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240417004158_OrderUpdate")]
+    partial class OrderUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,10 +171,11 @@ namespace HHPW_BE.Migrations
                         new
                         {
                             OrderId = 3,
+                            CloseTime = new DateTime(2024, 4, 3, 6, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerName = "Daphne Moon",
                             CustomerPhone = "(615)222-4567",
                             Email = "daphnemoon@hotmail.com",
-                            IsOpen = true,
+                            IsOpen = false,
                             IsPhone = true,
                             OrderTime = new DateTime(2024, 4, 3, 5, 0, 0, 0, DateTimeKind.Unspecified),
                             RevTotal = 0m,

@@ -47,11 +47,11 @@ namespace HHPW_BE.Controllers
                     .Select(o => new
                     {
                         o.OrderId,
-                        IsOpen = o.IsOpen,
+                        o.IsOpen,
                         o.CustomerName,
                         o.CustomerPhone,
                         o.Email,
-                        IsPhone = o.IsPhone,
+                        o.IsPhone,
                         o.UserId,
                         o.OrderTime,
                         o.CloseTime,
@@ -131,6 +131,15 @@ namespace HHPW_BE.Controllers
                     Items = new List<OrderItem>(),
                 };
 
+                foreach (var itemId in orderDTO.ItemIds)
+                {
+                    var item = db.Items.Find(itemId);
+                    if (item != null)
+                    {
+                        newOrder.Items.Add(new OrderItem { Item = item, Order = newOrder });
+                    }
+                }
+
                 db.Orders.Add(newOrder);
                 db.SaveChanges();
 
@@ -163,6 +172,7 @@ namespace HHPW_BE.Controllers
                     ItemId = itemId
                 };
                 db.OrderItems.Add(orderItem);
+                order.RevTotal += item.Price;
                 db.SaveChanges();
 
                 var itemName = item.Name;
