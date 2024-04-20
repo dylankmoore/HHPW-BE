@@ -97,22 +97,34 @@ namespace HHPW_BE.Controllers
             });
 
             //DELETE an item from order
-            app.MapDelete("/orders/{orderId}/items/{orderItemId}", (HHPWDbContext db, int orderId, int orderItemId) =>
+            app.MapDelete("/orders/{orderId}/items/{orderItemId}", async (HHPWDbContext db, int orderId, int orderItemId) =>
             {
-                var orderItem = db.OrderItems
-                      .Include(oi => oi.Item)
-                      .FirstOrDefault(oi => oi.OrderId == orderId && oi.OrderItemId == orderItemId);
+                // First, find the order item with its associated item to get the price
+                var orderItem = await db.OrderItems
+                                        .Include(oi => oi.Item)
+                                        .Where(oi => oi.OrderId == orderId && oi.OrderItemId == orderItemId)
+                                        .FirstOrDefaultAsync();
 
                 if (orderItem == null)
                 {
                     return Results.NotFound("This item in the order is not found.");
                 }
-                var itemName = orderItem.Item.Name;
+
+                // Now fetch the corresponding order
+                var order = await db.Orders.FindAsync(orderId);
+                if (order == null)
+                {
+                    return Results.NotFound("Order not found.");
+                }
+
+                // Update the order's total revenue
+                order.RevTotal -= orderItem.Item.Price;
+
+                // Remove the order item from the database
                 db.OrderItems.Remove(orderItem);
+                await db.SaveChangesAsync();
 
-                db.SaveChanges();
-
-                return Results.Ok($"{orderItem.Item.Name} has been removed from order {orderId}.");
+                return Results.Ok(new { Message = $"{orderItem.Item.Name} has been removed from order {orderId}. New total: {order.RevTotal}" });
             });
 
             //CREATE an order
