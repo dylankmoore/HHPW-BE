@@ -40,16 +40,15 @@ public class HHPWDbContext : DbContext
         // Seeding Orders
         modelBuilder.Entity<Order>().HasData(new Order[]
         {
-        new Order { 
-            OrderId = 1, 
-            IsOpen = true, 
-            CustomerName = "Roz Doyle", 
-            CustomerPhone = "(615)123-4567", 
-            Email = "roz@kacl.org", 
-            IsPhone = true, 
-            UserId = 1, 
-            OrderTime = new DateTime(2024, 4, 1, 10, 0, 0),
-            RevTotal = 100},
+        new Order {
+            OrderId = 1,
+            IsOpen = true,
+            CustomerName = "Roz Doyle",
+            CustomerPhone = "(615)123-4567",
+            Email = "roz@kacl.org",
+            IsPhone = true,
+            UserId = 1,
+            OrderTime = new DateTime(2024, 4, 1, 10, 0, 0)},
         new Order {
             OrderId = 2,
             IsOpen = true,
@@ -58,21 +57,16 @@ public class HHPWDbContext : DbContext
             Email = "frasier@kacl.org",
             IsPhone = false,
             UserId = 2,
-            OrderTime = new DateTime(2024, 4, 3, 12, 0, 0),
-            RevTotal = 40},
+            OrderTime = new DateTime(2024, 4, 3, 12, 0, 0)},
         new Order {
             OrderId = 3,
-            IsOpen = false,
+            IsOpen = true,
             CustomerName = "Daphne Moon",
             CustomerPhone = "(615)222-4567",
             Email = "daphnemoon@hotmail.com",
             IsPhone = true,
             UserId = 1,
-            OrderTime = new DateTime(2024, 4, 3, 5, 0, 0),
-            CloseTime = new DateTime(2024, 4, 3, 6, 0, 0),
-            RevTotal = 70,
-            Tip = 30,
-            PaymentType = "Debit"},
+            OrderTime = new DateTime(2024, 4, 3, 5, 0, 0)},
         });
 
         modelBuilder.Entity<OrderItem>().HasData(new OrderItem[]
